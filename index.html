@@ -20,13 +20,115 @@
     />
     <link rel="stylesheet" href="style.css" />
     <title>Weather Dashboard</title>
-  </head>
-
-  <body>
     <header class="jumbotron">
       <h1 class="text-center">Weather Dashboard</h1>
     </header>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="grid">
+      <div class="Search">
+        <div class="input-group">
+          <div class="form-outline">
+            <h1>Search for a City:</h1>
+            <input type="search" id="form1" class="form-control" />
+          </div>
+          <button type="button" class="btn btn-primary btn-block">
+            Search
+          </button>
+        </div>
+        <div class="cities">
+          <ol>
+            <!-- <button type="button" class="btn btn-secondary btn-block">
+              Austin
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              Chicago
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              New York
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              Block level button
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              Block level button
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              Block level button
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              Block level button
+            </button> -->
+          </ol>
+        </div>
+      </div>
+      <div class="city border border-dark">
+        <div class="text">
+          <h1>Atlanta</h1>
+          <h4 id="temp">Temp:</h4>
+          <h4 id="wind">Wind:</h4>
+          <h4 id="humdity">Humdity:</h4>
+          <h4 id="uv">UV Index:</h4>
+        </div>
+      </div>
+      <div class="forcast">
+        <h1>5 day forecast</h1>
+        <div class="forecastList">
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="script.js"></script>
   </body>

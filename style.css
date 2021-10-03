@@ -1,0 +1,51 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Search city city"
+    "Search forcast forcast"
+    "Search . .";
+}
+
+.Search {
+  grid-area: Search;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+  margin: 50px;
+}
+.input-group {
+  justify-content: center;
+}
+
+.cities {
+  display: flex;
+  margin-top: 20px;
+}
+
+.city {
+  grid-area: city;
+  width: auto;
+  margin-right: 30px;
+  margin-bottom: 40px;
+  height: auto;
+}
+.text {
+  margin: 20px;
+}
+.text h4 {
+  line-height: 40px;
+}
+.forcast {
+  grid-area: forcast;
+}
+
+.forecastList {
+  display: flex;
+  flex-direction: row;
+}
