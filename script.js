@@ -9,26 +9,29 @@ var weatherText = document.querySelector(".text");
 var forecastList = document.querySelector(".forecastList");
 var cityList = document.getElementById("cityList");
 
+//Get Weather Data when Searched
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
   //Clear 5 Day forcast
   forecastList.textContent = "";
+  //Set Local Storage
+  setLocationData(searchText.value);
   //Get Current Weather
   getCity();
 });
 
+//Get Weather data from Previous search
 cityList.addEventListener("click", function (event) {
   event.preventDefault();
   if (event.target.className === "btn btn-secondary btn-block") {
     var location = event.target.id;
-    console.log(location);
-    searchText.textContent = location;
+    searchText.value = location;
+    forecastList.textContent = "";
     getCity();
-  } else {
-    console.log("hetooo");
   }
 });
 
+//Use Open Weather API to Collect Data
 function getCity() {
   var url = `https://api.openweathermap.org/data/2.5/weather?q=${searchText.value}&units=imperial&appid=9b716091aa90cbcca7e67ce6002eb6ed`;
   fetch(url)
@@ -36,18 +39,18 @@ function getCity() {
       if (response.ok) {
         response.json().then(function (data) {
           currentDate = moment().format("MM/DD/YY");
-          setLocationData(searchText.value);
           cityName.textContent = `${data.name} ${currentDate} `;
           temp.textContent = `Temp: ${data.main.temp} F`;
           wind.textContent = `Wind: ${data.wind.speed} MPH`;
           humdity.textContent = `Humidty: ${data.main.humidity} %`;
+          //URL For UV Index
           uvUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=hourly,daily&appid=9b716091aa90cbcca7e67ce6002eb6ed`;
           fetch(uvUrl).then(function (response) {
             response.json().then(function (data) {
-              console.log(data);
+              //Color change depending on UV index
               if (data.current.uvi < 2) {
                 uvIndex.setAttribute("class", "green");
-              } else if (data.curent.uvi > 2 && data.curent.uvi < 6) {
+              } else if (data.current.uvi > 2 && data.current.uvi < 6) {
                 uvIndex.setAttribute("class", "yellow");
               } else {
                 uvIndex.setAttribute("class", "red");
@@ -55,23 +58,23 @@ function getCity() {
               uvIndex.textContent = `UVI: ${data.current.uvi}`;
             });
           });
+          //5 day forecast
           forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchText.value}&units=imperial&appid=9b716091aa90cbcca7e67ce6002eb6ed`;
           fetch(forcastUrl).then(function (response) {
             response.json().then(function (data) {
-              console.log(data);
+              //Get every 8th Array element that matches new day
               const every_nth = (arr, nth) =>
                 arr.filter((e, i) => i % nth === nth - 1);
-              console.log(every_nth(data.list, 8));
               var fiveDays = every_nth(data.list, 8);
               for (i = 0; i < fiveDays.length; i++) {
-                console.log(fiveDays[i]);
+                //Create new card per day of forecast
                 var div = document.createElement("div");
                 div.className = "card card-body";
                 var date = document.createElement("h5");
                 date.textContent = fiveDays[i].dt_txt.split(" ")[0];
                 div.appendChild(date);
                 var emoji = document.createElement("p");
-                console.log(fiveDays[i].weather[0].main);
+                //Determine Emoji to use depending on weather conditions
                 if (fiveDays[i].weather[0].main == "Clouds") {
                   emoji.textContent = "☁️";
                 } else if (fiveDays[i].weather[0].main == "Rain") {
@@ -95,10 +98,12 @@ function getCity() {
           });
         });
       } else {
+        //Alert user if search returns an error
         alert("Error: " + response.statusText);
       }
     })
     .catch(function (error) {
+      //Redirect use if page is down
       alert("Unable to connect");
     });
 }
@@ -110,7 +115,6 @@ function getLocationData() {
     localStorage.setItem("city", JSON.stringify(cities));
   } else {
     listCity = JSON.parse(localStorage.getItem("city"));
-    console.log(listCity);
   }
   renderSearchedCity();
 }
@@ -128,7 +132,6 @@ function renderSearchedCity(city) {
   listCity = JSON.parse(localStorage.getItem("city"));
   for (i = 0; i < listCity.length; i++) {
     button = document.createElement("button");
-    console.log(listCity[i]);
     button.setAttribute("class", "btn btn-secondary btn-block");
     button.textContent = listCity[i];
     cityList.appendChild(button);
@@ -144,5 +147,3 @@ function addCity() {
   button.setAttribute("id", `${button.textContent}`);
   cityList.appendChild(button);
 }
-
-//Clicking on Previous Searches
