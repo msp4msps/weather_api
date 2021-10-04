@@ -11,6 +11,25 @@ var cityList = document.getElementById("cityList");
 
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
+  //Clear 5 Day forcast
+  forecastList.textContent = "";
+  //Get Current Weather
+  getCity();
+});
+
+cityList.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (event.target.className === "btn btn-secondary btn-block") {
+    var location = event.target.id;
+    console.log(location);
+    searchText.textContent = location;
+    getCity();
+  } else {
+    console.log("hetooo");
+  }
+});
+
+function getCity() {
   var url = `https://api.openweathermap.org/data/2.5/weather?q=${searchText.value}&units=imperial&appid=9b716091aa90cbcca7e67ce6002eb6ed`;
   fetch(url)
     .then(function (response) {
@@ -76,13 +95,15 @@ searchBtn.addEventListener("click", function (event) {
           });
         });
       } else {
-        weatherText.textContent = "Error: " + response.statusText;
+        alert("Error: " + response.statusText);
       }
     })
     .catch(function (error) {
       alert("Unable to connect");
     });
-});
+}
+
+//Set Loal Storage or garner previous searches
 var cities = [];
 function getLocationData() {
   if (localStorage.getItem("city") === null) {
@@ -95,21 +116,33 @@ function getLocationData() {
 }
 getLocationData();
 
+//Set new search into local storage
 function setLocationData(city) {
   cities.push(city);
   localStorage.setItem("city", JSON.stringify(cities));
-  renderSearchedCity(city);
+  addCity();
 }
 
+//Render all searched cities from Local Storage
 function renderSearchedCity(city) {
   listCity = JSON.parse(localStorage.getItem("city"));
   for (i = 0; i < listCity.length; i++) {
-    if (listCity[i] != city) {
-      button = document.createElement("button");
-      console.log(listCity[i]);
-      button.setAttribute("class", "btn btn-secondary btn-block");
-      button.textContent = listCity[i];
-      cityList.appendChild(button);
-    }
+    button = document.createElement("button");
+    console.log(listCity[i]);
+    button.setAttribute("class", "btn btn-secondary btn-block");
+    button.textContent = listCity[i];
+    cityList.appendChild(button);
   }
 }
+
+//Add Cities to searched list
+function addCity() {
+  listCity = JSON.parse(localStorage.getItem("city"));
+  button = document.createElement("button");
+  button.textContent = listCity[listCity.length - 1];
+  button.setAttribute("class", `btn btn-secondary btn-block`);
+  button.setAttribute("id", `${button.textContent}`);
+  cityList.appendChild(button);
+}
+
+//Clicking on Previous Searches
