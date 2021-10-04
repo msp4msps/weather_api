@@ -49,11 +49,11 @@ function getCity() {
             response.json().then(function (data) {
               //Color change depending on UV index
               if (data.current.uvi < 2) {
-                uvIndex.setAttribute("class", "green");
+                uvIndex.setAttribute("class", "col-2 green");
               } else if (data.current.uvi > 2 && data.current.uvi < 6) {
-                uvIndex.setAttribute("class", "yellow");
+                uvIndex.setAttribute("class", "col-2 yellow");
               } else {
-                uvIndex.setAttribute("class", "red");
+                uvIndex.setAttribute("class", "col-2 red");
               }
               uvIndex.textContent = `UVI: ${data.current.uvi}`;
             });
