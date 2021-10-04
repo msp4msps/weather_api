@@ -15,7 +15,9 @@ searchBtn.addEventListener("click", function (event) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          cityName.textContent = data.name;
+          console.log(data);
+          currentDate = moment().format("MM/DD/YY");
+          cityName.textContent = `${data.name} ${currentDate} `;
           temp.textContent = `Temp: ${data.main.temp} F`;
           wind.textContent = `Wind: ${data.wind.speed} MPH`;
           humdity.textContent = `Humidty: ${data.main.humidity} %`;
@@ -48,6 +50,16 @@ searchBtn.addEventListener("click", function (event) {
                 var date = document.createElement("h5");
                 date.textContent = fiveDays[i].dt_txt.split(" ")[0];
                 div.appendChild(date);
+                var emoji = document.createElement("p");
+                console.log(fiveDays[i].weather[0].main);
+                if (fiveDays[i].weather[0].main == "Clouds") {
+                  emoji.textContent = "☁️";
+                } else if (fiveDays[i].weather[0].main == "Rain") {
+                  emoji.textContent = "🌧";
+                } else if (fiveDays[i].weather[0].main == "Clear") {
+                  emoji.textContent = "☀️";
+                }
+                div.appendChild(emoji);
                 var temp2 = document.createElement("h6");
                 temp2.textContent = ` Temp: ${fiveDays[i].main.feels_like} F`;
                 div.appendChild(temp2);
