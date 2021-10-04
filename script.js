@@ -7,6 +7,7 @@ var humdity = document.getElementById("humdity");
 var uvIndex = document.getElementById("uv");
 var weatherText = document.querySelector(".text");
 var forecastList = document.querySelector(".forecastList");
+var cityList = document.getElementById("cityList");
 
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
@@ -15,8 +16,8 @@ searchBtn.addEventListener("click", function (event) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data);
           currentDate = moment().format("MM/DD/YY");
+          setLocationData(searchText.value);
           cityName.textContent = `${data.name} ${currentDate} `;
           temp.textContent = `Temp: ${data.main.temp} F`;
           wind.textContent = `Wind: ${data.wind.speed} MPH`;
@@ -82,3 +83,33 @@ searchBtn.addEventListener("click", function (event) {
       alert("Unable to connect");
     });
 });
+var cities = [];
+function getLocationData() {
+  if (localStorage.getItem("city") === null) {
+    localStorage.setItem("city", JSON.stringify(cities));
+  } else {
+    listCity = JSON.parse(localStorage.getItem("city"));
+    console.log(listCity);
+  }
+  renderSearchedCity();
+}
+getLocationData();
+
+function setLocationData(city) {
+  cities.push(city);
+  localStorage.setItem("city", JSON.stringify(cities));
+  renderSearchedCity(city);
+}
+
+function renderSearchedCity(city) {
+  listCity = JSON.parse(localStorage.getItem("city"));
+  for (i = 0; i < listCity.length; i++) {
+    if (listCity[i] != city) {
+      button = document.createElement("button");
+      console.log(listCity[i]);
+      button.setAttribute("class", "btn btn-secondary btn-block");
+      button.textContent = listCity[i];
+      cityList.appendChild(button);
+    }
+  }
+}
