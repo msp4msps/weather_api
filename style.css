@@ -37,6 +37,9 @@
 }
 .text {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
 }
 .text h4 {
   line-height: 40px;
@@ -48,4 +51,20 @@
 .forecastList {
   display: flex;
   flex-direction: row;
+}
+.green {
+  background-color: chartreuse;
+  border-radius: 0px;
+}
+.yellow {
+  background-color: yellow;
+}
+.red {
+  background-color: red;
+  border-radius: 0px;
+}
+
+.card {
+  background-color: rgb(51, 113, 230);
+  color: white;
 }
